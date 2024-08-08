@@ -11,7 +11,7 @@ const AppGradient = ({
 }) => {
   return (
     <LinearGradient colors={colors} className="flex-1">
-      <Content> {children}</Content>
+      <Content>{children}</Content>
     </LinearGradient>
   );
 };

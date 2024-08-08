@@ -1,5 +1,4 @@
 import React from "react";
-import { LinearGradient } from "expo-linear-gradient";
 // import beachImage from "/musicapp/assets/meditation-images/beach.webp";
 import beachImage from "../assets/meditation-images/beach.webp";
 import { View, Text, ImageBackground, SafeAreaView } from "react-native";
