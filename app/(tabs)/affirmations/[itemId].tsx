@@ -24,7 +24,6 @@ const AffirmationPractice = () => {
       );
       if (affirmationToStart) {
         setAffirmation(affirmationToStart);
-        const affirmationsArray = affirmationToStart.text.split(".");
         return;
       }
     }

@@ -32,6 +32,15 @@ const Tablayout = () => {
           },
         }}
       />
+      <Tabs.Screen
+        name="meditate"
+        options={{
+          tabBarLabel: "Meditate",
+          tabBarIcon: ({ color }) => {
+            return <Entypo name="open-book" size={24} color="black" />;
+          },
+        }}
+      />
     </Tabs>
   );
 };

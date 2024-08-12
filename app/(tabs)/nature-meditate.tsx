@@ -4,6 +4,7 @@ import AppGradient from "@/components/AppGradient";
 import { StatusBar } from "expo-status-bar";
 import { MEDITATION_DATA } from "@/constants/meditationData";
 import MEDITATION_IMAGES from "@/constants/meditation-images";
+import { router } from "expo-router";
 
 const NatureMeditate = () => {
   return (
@@ -27,7 +28,7 @@ const NatureMeditate = () => {
             renderItem={({ item }) => (
               // The <Pressable> component in React Native is a wrapper component that provides touch handling for its child components. It is often used to create interactive UI elements that respond to user interactions such as taps, long presses, and so on. The <Pressable> component is more flexible and has more features compared to other touchable components like <TouchableOpacity>, <TouchableHighlight>, etc.
               <Pressable
-                onPress={() => console.log("Press")}
+                onPress={() => router.push(`/meditate/${item.id}`)}
                 className="h-48 my-3 rounded-md overflow-hidden"
               >
                 <ImageBackground
@@ -48,5 +49,4 @@ const NatureMeditate = () => {
     </View>
   );
 };
-
 export default NatureMeditate;
