@@ -1,5 +1,5 @@
 import { View, Text, ImageBackground, Pressable } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import MEDITATION_IMAGES from "@/constants/meditation-images";
 import AppGradient from "@/components/AppGradient";
 import { router, useLocalSearchParams } from "expo-router";
@@ -7,18 +7,18 @@ import AntDesign from "@expo/vector-icons/AntDesign";
 import CustomButton from "@/components/CustomButton";
 import { Audio } from "expo-av";
 import { MEDITATION_DATA, AUDIO_FILES } from "@/constants/meditationData";
-import { Sound } from "expo-av/build/Audio";
+import { TimerContexte } from "@/context/TimerContext";
 
 const Meditate = () => {
   const { id } = useLocalSearchParams();
   const [imag, SetImag] = useState<number>();
-  const [time, SetTime] = useState<number>(10);
+  // const [time, SetTime] = useState<number>(10);
+  const { duration: time, setDuration: SetTime } = useContext(TimerContexte);
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [audioSound, setAudioSound] = useState<Audio.Sound>();
   const [isPlayingAudio, setIsPlayingAudio] = useState(false);
 
   useEffect(() => {
-    let timer: any;
     const FindIndex = () => {
       {
         for (let i = 0; i < MEDITATION_IMAGES.length; i++) {
@@ -32,16 +32,20 @@ const Meditate = () => {
   }, []);
   // Handle the timer logic
   useEffect(() => {
-    let timer: any;
+    let timer: NodeJS.Timeout;
 
     if (isPlaying && time > 0) {
       timer = setTimeout(() => {
         SetTime((prevCount) => prevCount - 1);
       }, 1000);
     }
-
+    if (time === 0) {
+      setIsPlaying(false);
+      return;
+    }
+    // Stop the timer when time reaches 0
     if (time <= 0) {
-      setIsPlaying(false); // Stop the timer when time reaches 0
+      setIsPlaying(false);
     }
 
     // Cleanup the timeout
@@ -102,6 +106,11 @@ const Meditate = () => {
       .padStart(2, "0")
   );
 
+  const HandleAdjustDuration = () => {
+    if (isPlaying) toggleMedtationSessionStatus();
+    router.push("/(modal)/adjust-meditation");
+  };
+
   return (
     <View className="flex-1">
       <ImageBackground
@@ -125,6 +134,11 @@ const Meditate = () => {
             </View>
           </View>
           <View className=" mb-5">
+            <CustomButton
+              title="Adjust Duration "
+              onPress={() => HandleAdjustDuration()}
+              containerStyle="mb-4"
+            />
             <CustomButton
               title="Start  Meditation "
               onPress={() => toggleMedtationSessionStatus()}
